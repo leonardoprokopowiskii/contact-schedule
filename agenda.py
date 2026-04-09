@@ -6,7 +6,42 @@ def add_contact(contacts, contact_name, contact_phone, contact_email):
 def visualize_contacts(contacts):
     for index, contact in enumerate(contacts, start=1):
         favorite = "★" if contact['favorite'] else " "
-        print(f"{index}. [{favorite}] {contact['name']} - {contact['phone']} - {contact['email']}")  
+        print(f"{index}. [{favorite}] {contact['name']} - {contact['phone']} - {contact['email']}")
+
+def visualize_fields():
+    print(f"\n----- Lista de Campos do Contato -----")
+    print("1. Nome")
+    print("2. Telefone")
+    print("3. Email")
+
+def edit_contact(contacts, chosen_contact):
+    try:
+        if int(chosen_contact) in range(1, (len(contacts) + 1)):
+            adjusted_chosen_contact = int(chosen_contact) - 1
+        else:
+            print("Não existe um contato registrado para o índice inserido!")
+            return
+    except Exception as e:
+        print(f"Erro: {e}")
+        return
+
+    visualize_fields()
+    chosen_field = input("\nDigite o número do campo que deseja editar: ")
+
+    if chosen_field == "1":
+        new_contact_name = input("Digite o novo nome do contato: ")
+        contacts[adjusted_chosen_contact]['name'] = new_contact_name
+        print(f"Nome do contato foi alterado para '{new_contact_name}' com sucesso!")
+    elif chosen_field == "2":
+        new_phone = input("Digite o novo número do contato: ")
+        contacts[adjusted_chosen_contact]['phone'] = new_phone
+        print(f"Telefone do contato foi alterado para '{new_phone}' com sucesso!")
+    elif chosen_field == "3":
+        new_email = input("Digite o novo email do contato: ")
+        contacts[adjusted_chosen_contact]['email'] = new_email
+        print(f"Email do contato alterado para '{new_email}' com sucesso!")
+    else:
+        print("Opção inválida!")
 
 contacts = []
 
@@ -25,12 +60,23 @@ while True:
     if choice == "1":
         print("\n----- Adicionando Contato -----")
         contact_name = input("Digite o nome do seu contato: ")
-        contact_phone = int(input("Digite o telefone: "))
+        contact_phone = input("Digite o telefone: ")
         contact_email = input("Digite o email: ")
         add_contact(contacts, contact_name, contact_phone, contact_email)
     elif choice == "2":
-        print("\n----- Lista de Contatos -----")
-        visualize_contacts(contacts)
+        if len(contacts) > 0:
+            print("\n----- Lista de Contatos -----")
+            visualize_contacts(contacts)
+        else:
+            print("Nenhum contato registrado!")
+    elif choice == "3":
+        if len(contacts) > 0:
+            print("\n----- Lista de Contatos -----")
+            visualize_contacts(contacts)
+            chosen_contact = input("\nDigite o número do contato que deseja editar: ")
+            edit_contact(contacts, chosen_contact)
+        else:
+            print("Nenhum contato registrado!")
     elif choice == "7":
         print("Programa Encerrado!")
         break
