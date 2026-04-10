@@ -66,6 +66,12 @@ def mark_as_favorite_contact(contacts, chosen_contact):
         contacts[adjusted_chosen_contact]['favorite'] = False
         print(f"Contato '{contacts[adjusted_chosen_contact]['name']}' foi desmarcado como favorito!")
 
+
+def visualize_favorites_contacts(favorite_valid):
+    print("\n----- Lista de Contatos Favoritos -----")
+    for index, contact in enumerate(favorite_valid, start=1):
+        print(f"{index}. [★] {contact['name']} - {contact['phone']} - {contact['email']}")
+
 contacts = []
 
 while True:
@@ -105,6 +111,16 @@ while True:
             mark_as_favorite_contact(contacts, chosen_contact)
         else:
             print("Nenhum contato registrado!")
+    elif choice == "5":
+        favorite_valid = []
+        if len(contacts) > 0:
+            for contact in contacts:
+                if contact['favorite']:
+                    favorite_valid.append(contact)
+        if len(favorite_valid) > 0:
+            visualize_favorites_contacts(favorite_valid)
+        else:
+            print("Nenhum contato marcado como favorito. Visualização indisponível!")
     elif choice == "7":
         print("Programa Encerrado!")
         break
