@@ -83,8 +83,7 @@ def delete_contact(contacts, chosen_contact):
     except Exception as e:
         print(f"Erro: {e}")
         return
-    contact_removed = contacts[adjusted_chosen_contact]
-    contacts.remove(contact_removed)
+    contact_removed = contacts.pop(adjusted_chosen_contact)
     print(f"Contato '{contact_removed['name']}' apagado com sucesso!")
 
 contacts = []
