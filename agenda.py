@@ -72,6 +72,21 @@ def visualize_favorites_contacts(favorite_valid):
     for index, contact in enumerate(favorite_valid, start=1):
         print(f"{index}. [★] {contact['name']} - {contact['phone']} - {contact['email']}")
 
+
+def delete_contact(contacts, chosen_contact):
+    try:
+        if int(chosen_contact) in range(1, (len(contacts) + 1)):
+            adjusted_chosen_contact = int(chosen_contact) - 1
+        else:
+            print("Não existe um contato registrado para o índice inserido!")
+            return
+    except Exception as e:
+        print(f"Erro: {e}")
+        return
+    contact_removed = contacts[adjusted_chosen_contact]
+    contacts.remove(contact_removed)
+    print(f"Contato '{contact_removed['name']}' apagado com sucesso!")
+
 contacts = []
 
 while True:
@@ -121,6 +136,13 @@ while True:
             visualize_favorites_contacts(favorite_valid)
         else:
             print("Nenhum contato marcado como favorito. Visualização indisponível!")
+    elif choice == "6":
+        if len(contacts) > 0:
+            visualize_contacts(contacts)
+            chosen_contact = input("\nDigite o número do contato que deseja apagar: ")
+            delete_contact(contacts, chosen_contact)
+        else:
+            print("Nenhum contato registrado. Função indisponível!")
     elif choice == "7":
         print("Programa Encerrado!")
         break
